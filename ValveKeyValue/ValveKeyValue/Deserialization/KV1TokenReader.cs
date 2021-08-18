@@ -12,6 +12,7 @@ namespace ValveKeyValue.Deserialization
         const char ObjectStart = '{';
         const char ObjectEnd = '}';
         const char CommentBegin = '/'; // Although Valve uses the double-slash convention, the KV spec allows for single-slash comments.
+        const char CommentBlock = '*';
         const char ConditionBegin = '[';
         const char ConditionEnd = ']';
         const char InclusionMark = '#';
@@ -96,9 +97,32 @@ namespace ValveKeyValue.Deserialization
         {
             ReadChar(CommentBegin);
 
-            if (Peek() == (char)CommentBegin)
+            if (Peek() == CommentBegin)
             {
                 Next();
+            }
+            else if (Peek() == CommentBlock)
+            {
+                string block = "/*";
+                Next();
+
+                while (true)
+                {
+                    char c = Next();
+
+                    if (c == CommentBlock)
+                    {
+                        if (Peek() == CommentBegin)
+                        {
+                            block += "*/";
+                            break;
+                        }
+                    }
+
+                    block += c;
+                }
+
+                return new KVToken(KVTokenType.Comment, block);
             }
 
             var text = textReader.ReadLine();
