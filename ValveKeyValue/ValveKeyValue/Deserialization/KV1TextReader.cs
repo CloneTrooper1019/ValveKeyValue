@@ -174,8 +174,7 @@ namespace ValveKeyValue.Deserialization
                         stateMachine.Current));
             }
 
-            bool discard;
-            stateMachine.PopObject(out discard);
+            stateMachine.PopObject(out bool discard);
 
             if (stateMachine.IsInObject)
             {
@@ -288,8 +287,7 @@ namespace ValveKeyValue.Deserialization
                 return new KVObjectValue<ulong>(value, KVValueType.UInt64);
             }
 
-            int intValue;
-            if (int.TryParse(text, out intValue))
+            if (int.TryParse(text, out int intValue))
             {
                 return new KVObjectValue<int>(intValue, KVValueType.Int32);
             }
@@ -299,8 +297,7 @@ namespace ValveKeyValue.Deserialization
                 NumberStyles.AllowExponent |
                 NumberStyles.AllowLeadingSign;
 
-            float floatValue;
-            if (float.TryParse(text, FloatingPointNumberStyles, CultureInfo.InvariantCulture, out floatValue))
+            if (float.TryParse(text, FloatingPointNumberStyles, CultureInfo.InvariantCulture, out float floatValue))
             {
                 return new KVObjectValue<float>(floatValue, KVValueType.FloatingPoint);
             }
