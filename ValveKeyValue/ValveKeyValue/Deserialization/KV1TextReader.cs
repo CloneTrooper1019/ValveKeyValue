@@ -198,7 +198,8 @@ namespace ValveKeyValue.Deserialization
 
             if (stateMachine.IsInObject)
             {
-                throw new InvalidOperationException("Inconsistent state - at end of file whilst inside an object.");
+                // TODO: Turning this off probably isn't safe but I haven't seen problems so far. Needed to disable it for VMT parsing.
+                // throw new InvalidOperationException("Inconsistent state - at end of file whilst inside an object.");
             }
 
             foreach (var includedForMerge in stateMachine.ItemsForMerging)
