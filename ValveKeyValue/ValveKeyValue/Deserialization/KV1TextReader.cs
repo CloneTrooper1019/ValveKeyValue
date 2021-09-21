@@ -154,7 +154,7 @@ namespace ValveKeyValue.Deserialization
         {
             if (stateMachine.Current != KV1TextReaderState.InObjectBetweenKeyAndValue)
             {
-                throw new InvalidOperationException();
+                // throw new InvalidOperationException();
             }
 
             listener.OnObjectStart(stateMachine.CurrentName);
